@@ -1,3 +1,0 @@
-Pizza 550
-Rice 100
-Cold_drinks 30
