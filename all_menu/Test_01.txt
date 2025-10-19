@@ -1,3 +1,0 @@
-Tea 10
-Coffee 20
-Burger 100
