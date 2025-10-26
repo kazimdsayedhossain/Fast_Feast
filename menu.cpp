@@ -30,6 +30,7 @@ Date: 19.10.2025
 #include <cstdio>
 #include <thread>
 #include <chrono>
+#include "merge.h"
 
 using namespace std;
 
@@ -365,26 +366,39 @@ public:
     }
 };
 
-int main()
-{
-    while (true)
-    {
-        cout << "\n====== MAIN MENU ======\n";
-        cout << "1. Access Menu Options\n";
-        cout << "2. Exit\n";
-        int choice;
-        cin >> choice;
+int main() {
+    int choice;
 
-        if (choice == 1)
+    // Load menus if you have a load function
+    // load_menus();  // optional
+
+   do {
+    cout << "\n====== FAST FEAST SYSTEM ======\n";
+    cout << "1. Access Menu Options\n";
+    cout << "2. Show All Payments Record\n";
+    cout << "3. Manage Customers\n";
+    cout << "4. Exit\n";
+    cout << "Choose an option: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
             access_menu();
-        else if (choice == 2)
             break;
-        else
-            cout << "Invalid option.\n";
+        case 2:
+            show_all_record();
+            break;
+        case 3:
+            customer(); // 🔹 This calls your Customer menu
+            break;
+        case 4:
+            cout << "Exiting program...\n";
+            break;
+        default:
+            cout << "Invalid choice. Try again.\n";
     }
-
-    delete[] all_menus;
-    return 0;
+} while (choice != 4);
+ return 0;
 }
 
 void access_menu(void)
@@ -539,14 +553,13 @@ void add_order(void)
     cout << endl
          << "Press 1 to confirm order and pay or q to return: ";
     cin >> confirmation;
-    if (confirmation == '1')
-    {
-        // make_payment(to_pay);
-    }
-    else
-    {
-        cout << "Order cancelled.\n";
-    }
+if (confirmation == '1') {
+    payment pay; // create a payment object
+    pay.process_payment(to_pay, user_cart);
+} else {
+    cout << "Order cancelled.\n";
+}
+
 }
 
 void remove_menu(void)
@@ -582,7 +595,7 @@ void remove_menu(void)
     }
 
     cout << "Menu removed from the list.\n";
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    // std::this_thread::sleep_for(std::chrono::seconds(2));
     delete[] all_menus;
     all_menus = nullptr;
     menu_number = 0;
